@@ -1,0 +1,135 @@
+<!--we create our arm-->
+<?xml version="1.0"?>
+<robot name="arm">
+<!--NULL root link-->
+	<link name = "table">
+		<visual>
+			<geometry>
+				<box size = "1 1 10"/>
+			</geometry>
+			<origin rpy = "0 0 0" xyz = "0 0 0"/>
+			<material name = "black">
+				<color rgba = "1 0 0 0"/>
+			</material>
+		</visual>
+	</link>		
+<!--base link is a cube so...-->
+	<link name = "cube_Base">
+		<visual>
+			<geometry>
+				<box size = "0.1 0.1 0.14"/>
+			</geometry>
+			<origin rpy = "0 0 0" xyz = "0 0 0"/>
+			<material name = "red">
+				<color rgba = "1 0 0 1"/>
+			</material>
+		</visual>
+	</link>		
+<!-- base's joint implementation -->
+<joint name = "base" type = "fixed">
+	<parent link = "table"/>
+	<child link = "cube_Base"/>
+	<origin xyz ="0 0 0.1"/>
+	<axis xyz ="0 0 1" />
+</joint>
+<!--shoulder definition...-->
+<link name = "Child_Shoulder">
+	<visual>
+		<geometry>
+			<cylinder length = "0.20" radius = "0.05"/>
+		</geometry>
+		<origin rpy = "0 0 0" xyz = "0 0 0.07"/>
+		<material name = "white">
+			<color rgba = "1 1 1 1"/>
+		</material>
+	</visual>
+</link>
+<!--shoulder implementation-->
+<joint name = "shoulder" type = "revolute">
+	<limit effort="0" velocity="10" lower="-150" upper="114"/>
+	<parent link = "table"/>
+	<child link = "Child_Shoulder"/>
+	<origin xyz ="0 0 0.1"/>
+	<axis xyz ="0 0 1" />
+</joint>
+<!--arm definition...-->
+<link name = "Child_Arm">
+	<visual>
+		<geometry>
+			<box size = "0.04 0.04 0.13"/>
+		</geometry>
+		<origin rpy = "0 0 0" xyz = "0 0 0.14"/>
+		<material name = "red">
+			<color rgba = "1 0 0 1"/>
+		</material>
+	</visual>
+</link>
+<!--arm implementation-->
+<joint name = "arm" type = "revolute">
+	<limit effort = "0" velocity = "10" lower="-150" upper="114"/>
+	<parent link = "table"/>
+	<child link = "Child_Arm"/>
+	<origin xyz ="0 0 0.14"/>
+	<axis xyz ="0 0 1" />
+</joint>
+<!--child definition-->
+<link name = "Child_Hand">
+	<visual>
+		<geometry>
+			<box size = "0.07 0.07 0.05"/>
+		</geometry>
+		<origin rpy = "0 0 0" xyz = "0 0 0.17"/>
+		<material name = "yellow">
+			<color rgba = "1 2 0 1"/>
+		</material>
+	</visual>
+</link>
+<!--child implementation-->
+<joint name = "hand" type = "revolute">
+	<limit effort = "0" velocity = "10" lower="-150" upper="114"/>
+	<parent link = "table"/>
+	<child link = "Child_Hand"/>
+	<origin xyz ="0 0 0.19"/>
+	<axis xyz ="0 0 1" />
+</joint>
+<!--fingers definition and implementation-->
+<link name = "Child_Dx_Finger">
+	<visual>
+		<geometry>
+			<box size = "0.02 0.02 0.04"/>
+		</geometry>
+		<origin rpy = "0 0 0" xyz = "0 -0.009 0.20"/>
+		<material name = "white">
+			<color rgba = "1 1 1 1"/>
+		</material>
+	</visual>
+</link>
+<link name = "Child_Sx_Finger">
+	<visual>
+		<geometry>
+			<box size = "0.02 0.02 0.04"/>
+		</geometry>
+		<origin rpy = "0 0 0" xyz = "0 0.009 0.20"/>
+		<material name = "white">
+			<color rgba = "1 1 1 1"/>
+		</material>
+	</visual>
+</link>
+<joint name = "sx_Finger" type = "revolute">
+	<limit effort = "0" velocity = "10" lower="-150" upper="114"/>
+	<parent link = "table"/>
+	<child link = "Child_Sx_Finger"/>
+	<origin xyz ="0 0.009 0.20"/>
+	<axis xyz ="0 0 1" />
+</joint>
+
+<joint name = "dx_Finger" type = "revolute">
+	<limit effort = "0" velocity = "10" lower="-150" upper="114"/>
+	<parent link = "table"/>
+	<child link = "Child_Dx_Finger"/>
+	<origin xyz ="0 -0.009 0.20"/>
+	<axis xyz ="0 0 1" />
+</joint>
+<!--The End-->
+</robot>
+
